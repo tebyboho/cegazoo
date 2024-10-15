@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preload" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
+    <link rel="preload" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="preload" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Aplicacion Cega-Zoo</title>
+</head>
+<body>
+    <div class="container">
+        
+        <form class="mt-5" method="POST" action="/">
+            
+            <div class="row m-3">
+                <label class="col-1 col-form form-label" for="start_date" >Fecha de inicio:</label>
+                <div class="col-5">
+                    <input class="form-control" type="date" id="start_date" name="start_date">
+                </div>
+            </div>
+            
+            <div class="row m-3">
+                <label class="col-1 col-form form-label" for="end_date" >Fecha de fin:</label>
+                <div class="col-5">
+                    <input class="form-control" type="date" id="end_date" name="end_date">
+                </div>
+            </div>
+            <div class="row m-3  mb-3">
+                <label class="col-1 col-form form-label" for="vendedora">Vendedora</label>
+                <div class="col-5">
+                    <select class="form-select" id="vendedora" name="vendedora">
+                        <option selected>Elegir</option>
+                        <option value="1">Magui</option>
+                        <option value="2">Sofi</option>
+                      </select>
+                </div>
+              </div>
+
+              <div class="row m-3  mb-3">
+                <label class="col-1 col-form form-label" for="categoria">Categoria</label>
+                <div class="col-5">
+                    <select class="form-select" id="categoria" name="categoria">
+                        <option selected>Elegir</option>
+                        <option value="1">Accesorios</option>
+                        <option value="2">Balanceados</option>
+                        <option value="3">Medicamentos</option>
+                        <option value="4">Animales</option>
+                        <option value="5">Acuario</option>
+                      </select>
+                </div>
+              </div>
+
+            <div class="col-3 mt-5">
+                <button type="submit">Aplicar filtro</button>
+            </div>
+        </form>
+
+    </div>
+</body>
+</html>

@@ -132,4 +132,39 @@ for vendedora, patron in patrones_vendedoras.items():
 
 print(ventas_por_vendedora)
 
+def obtener_vendedora(vendedora_form):
+    for key, patrones in patrones_vendedoras.items():
+        if vendedora_form in patrones:
+            return key
+    return None
+
+def filtrar_ventas(start_date, end_date, vendedora, categoria):
+    # Filtrar por fechas si se proporcionan
+    if start_date:
+        start_date = pd.to_datetime(start_date, format='%d-%m-%Y', errors='coerce')
+        df_filtrado = df_acumulado[df_acumulado['fecha'] >= start_date]
+    else:
+        df_filtrado = df_acumulado.copy()
+    
+    if end_date:
+        end_date = pd.to_datetime(end_date, format='%d-%m-%Y', errors='coerce')
+        df_filtrado = df_filtrado[df_filtrado['fecha'] <= end_date]
+
+    # Filtrar por vendedora si se proporciona
+    if vendedora:
+        df_filtrado = df_filtrado[df_filtrado['vendedor'] == vendedora]
+    
+    # Filtrar por categoría si se proporciona
+    if categoria:
+        df_filtrado = df_filtrado[df_filtrado['categoria'] == categoria]
+
+    # Si no hay datos tras el filtrado, retornar un valor por defecto
+    if df_filtrado.empty:
+        return 0  # o el valor por defecto que desees
+
+    # Retornar la suma de las ventas en base al dataset filtrado
+    return df_filtrado['total_venta'].sum()
+
+print(filtrar_ventas('01-09-2024', '30-09-2024', obtener_vendedora('Magui'), None ))
+print(obtener_vendedora('maguiii'))
 
