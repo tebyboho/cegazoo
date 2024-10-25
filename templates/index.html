@@ -14,7 +14,7 @@
 <body>
     <div class="container">
         
-        <form class="mt-5" method="POST" action="/">
+        <form class="mt-5" method="POST" action="">
             
             <div class="row m-3">
                 <label class="col-1 col-form form-label" for="start_date" >Fecha de inicio:</label>
@@ -34,29 +34,37 @@
                 <div class="col-5">
                     <select class="form-select" id="vendedora" name="vendedora">
                         <option selected>Elegir</option>
-                        <option value="1">Magui</option>
-                        <option value="2">Sofi</option>
+                        <option value="Magui">Magui</option>
+                        <option value="Sofia">Sofi</option>
                       </select>
                 </div>
-              </div>
+            </div>
 
-              <div class="row m-3  mb-3">
+            <div class="row m-3  mb-3">
                 <label class="col-1 col-form form-label" for="categoria">Categoria</label>
                 <div class="col-5">
                     <select class="form-select" id="categoria" name="categoria">
                         <option selected>Elegir</option>
-                        <option value="1">Accesorios</option>
-                        <option value="2">Balanceados</option>
-                        <option value="3">Medicamentos</option>
-                        <option value="4">Animales</option>
-                        <option value="5">Acuario</option>
+                        <option value="accesorios">Accesorios</option>
+                        <option value="balanceados">Balanceados</option>
+                        <option value="medicamentos">Medicamentos</option>
+                        <option value="animales">Animales</option>
+                        <option value="acuario">Acuario</option>
                       </select>
                 </div>
-              </div>
-
-            <div class="col-3 mt-5">
-                <button type="submit">Aplicar filtro</button>
             </div>
+
+            <div class="row m-3 mt-5">
+                <div class="col-1">
+                    <button type="submit">Aplicar filtro</button>
+                </div>
+                {% if context %}
+                    <div class="col-1">
+                        <h3 class=""> Resultado: {{context}} </h3>
+                    </div>
+                {% endif %}
+            </div>
+
         </form>
 
     </div>

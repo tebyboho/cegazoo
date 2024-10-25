@@ -101,11 +101,11 @@ def total_pagos():
     plt.gca().yaxis.set_major_formatter(ticker.StrMethodFormatter('{x:,}'))
     plt.show()
 
+print(df.head())
 
 
-
-fecha_inicio = pd.to_datetime('01-09-2024', format='%d-%m-%Y', errors='coerce')
-fecha_fin = pd.to_datetime('30-09-2024', format='%d-%m-%Y', errors='coerce')
+fecha_inicio = pd.to_datetime('01-08-2024', format='%d-%m-%Y', errors='coerce')
+fecha_fin = pd.to_datetime('31-08-2024', format='%d-%m-%Y', errors='coerce')
     
 mask = (df_acumulado['fecha'] >= fecha_inicio) & (df_acumulado['fecha'] <= fecha_fin) 
     
@@ -116,55 +116,62 @@ lista_vendedores = list(df_filtrado['vendedor'])
 
 
 patrones_vendedoras = {
-    'Sofía': r'(?i)\bsofi+i*[a]*\b',
+    'Sofia': r'(?i)\bsofi+i*[a]*\b',
     'Magui': r'(?i)\bmagui+i*[s]*\b'
-}
+    }
 
 # Diccionario para almacenar el total de ventas por vendedora
 ventas_por_vendedora = {vendedora: 0 for vendedora in patrones_vendedoras}
 
-# Calcular las ventas para cada vendedora
-for vendedora, patron in patrones_vendedoras.items():
-    filtro = df_filtrado['vendedor'].str.contains(patron, regex=True)
-    total_ventas = df_filtrado[filtro]['total_venta'].sum()
-    ventas_por_vendedora[vendedora] = total_ventas
 
+# # Calcular las ventas para cada vendedora
+# for vendedora, patron in patrones_vendedoras.items():
+#     filtro = df_filtrado['vendedor'].str.contains(patron, regex=True)
+#     total_ventas = df_filtrado[filtro]['total_venta'].sum()
+#     ventas_por_vendedora[vendedora] = total_ventas
+#     print(ventas_por_vendedora)
 
-print(ventas_por_vendedora)
-
-def obtener_vendedora(vendedora_form):
-    for key, patrones in patrones_vendedoras.items():
-        if vendedora_form in patrones:
-            return key
+def obtener_patron_vendedora(vendedora_form):
+    for key, patron in patrones_vendedoras.items():
+        if re.search(patron, vendedora_form):
+            return patron
     return None
 
-def filtrar_ventas(start_date, end_date, vendedora, categoria):
+
+def filtrar_ventas(start_date, end_date, vendedora=None, categoria=None):
     # Filtrar por fechas si se proporcionan
     if start_date:
+        print(f'Fecha antes de formatearse: {start_date}')
         start_date = pd.to_datetime(start_date, format='%d-%m-%Y', errors='coerce')
         df_filtrado = df_acumulado[df_acumulado['fecha'] >= start_date]
+        print(f'Fecha despues de formatearse: {start_date}')
     else:
         df_filtrado = df_acumulado.copy()
     
     if end_date:
+        print(end_date)
         end_date = pd.to_datetime(end_date, format='%d-%m-%Y', errors='coerce')
         df_filtrado = df_filtrado[df_filtrado['fecha'] <= end_date]
-
+        print(end_date)
     # Filtrar por vendedora si se proporciona
-    if vendedora:
-        df_filtrado = df_filtrado[df_filtrado['vendedor'] == vendedora]
+    if vendedora and vendedora != 'Elegir':
+        filtro_vendedor = df_filtrado['vendedor'].str.contains(obtener_patron_vendedora(vendedora), regex=True)
+        df_filtrado = df_filtrado[filtro_vendedor]
     
-    # Filtrar por categoría si se proporciona
-    if categoria:
-        df_filtrado = df_filtrado[df_filtrado['categoria'] == categoria]
+    if categoria and categoria != 'Elegir':
+        columna_categoria = f"total_{categoria.lower()}"
+        if columna_categoria in df_filtrado.columns:
+            total_ventas = df_filtrado[columna_categoria].sum()
+        else:
+            total_ventas = 0  # Valor por defecto si la categoría no existe
+    else:
+        total_ventas = df_filtrado['total_venta'].sum()  # Suma de todas las ventas si no se especifica categoría
 
-    # Si no hay datos tras el filtrado, retornar un valor por defecto
-    if df_filtrado.empty:
-        return 0  # o el valor por defecto que desees
+    return total_ventas
 
-    # Retornar la suma de las ventas en base al dataset filtrado
-    return df_filtrado['total_venta'].sum()
+print(filtrar_ventas('01-08-2024', '31-08-2024', None, None))
 
-print(filtrar_ventas('01-09-2024', '30-09-2024', obtener_vendedora('Magui'), None ))
-print(obtener_vendedora('maguiii'))
 
+# imprimir el codigo asi como esta, y fijate que antes de formatear paso en los parametros las fechas dd-mm-yyyy, formatea y la invierte, y puede filtrar bien
+# lo que me dijo chatgpt es que lo setee a media noche con el start_date = pd.to_datetime(start_date, format='%d-%m-%Y').normalize()
+# Proba eso y te tiene que andas bien, tanto pasando las fechas desde el form como manualmente
