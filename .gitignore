@@ -1,4 +1,5 @@
 /CAJAS_FORMATEADAS
+/__pycache__
 data_acumulada.pkl
 prueba.py
 test.py

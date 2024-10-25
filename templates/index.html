@@ -17,25 +17,25 @@
         <form class="mt-5" method="POST" action="">
             
             <div class="row m-3">
-                <label class="col-1 col-form form-label" for="start_date" >Fecha de inicio:</label>
+                <label class="col-1 col-form form-label" for="start_date">Fecha de inicio:</label>
                 <div class="col-5">
-                    <input class="form-control" type="date" id="start_date" name="start_date">
+                    <input class="form-control" type="date" id="start_date" name="start_date" value="{{ formulario.start_date }}" >
                 </div>
             </div>
             
             <div class="row m-3">
                 <label class="col-1 col-form form-label" for="end_date" >Fecha de fin:</label>
                 <div class="col-5">
-                    <input class="form-control" type="date" id="end_date" name="end_date">
+                    <input class="form-control" type="date" id="end_date" name="end_date" value="{{ formulario.end_date }}" >
                 </div>
             </div>
             <div class="row m-3  mb-3">
                 <label class="col-1 col-form form-label" for="vendedora">Vendedora</label>
                 <div class="col-5">
                     <select class="form-select" id="vendedora" name="vendedora">
-                        <option selected>Elegir</option>
-                        <option value="Magui">Magui</option>
-                        <option value="Sofia">Sofi</option>
+                        <option value="" {% if not formulario.vendedora%}selected{% endif %}>Elegir</option>
+                        <option value="Magui" {% if formulario.vendedora == 'Magui'%} selected {% endif %}>Magui</option>
+                        <option value="Sofia" {% if formulario.vendedora == 'Sofia'%} selected {% endif %}>Sofi</option>
                       </select>
                 </div>
             </div>
@@ -44,12 +44,12 @@
                 <label class="col-1 col-form form-label" for="categoria">Categoria</label>
                 <div class="col-5">
                     <select class="form-select" id="categoria" name="categoria">
-                        <option selected>Elegir</option>
-                        <option value="accesorios">Accesorios</option>
-                        <option value="balanceados">Balanceados</option>
-                        <option value="medicamentos">Medicamentos</option>
-                        <option value="animales">Animales</option>
-                        <option value="acuario">Acuario</option>
+                        <option value ="" {{'selected' if not formulario.categoria}}selected>Elegir</option>
+                        <option value="accesorios" {{ 'selected' if formulario.categoria == 'accesorios' else ''}}>Accesorios</option>
+                        <option value="balanceados" {{ 'selected' if formulario.categoria == 'balanceados' else ''}}>Balanceados</option>
+                        <option value="medicamentos" {{ 'selected' if formulario.categoria == 'medicamentos' else ''}}>Medicamentos</option>
+                        <option value="animales" {{ 'selected' if formulario.categoria == 'animales' else ''}}>Animales</option>
+                        <option value="acuario" {{ 'selected' if formulario.categoria == 'acuario' else ''}}>Acuario</option>
                       </select>
                 </div>
             </div>

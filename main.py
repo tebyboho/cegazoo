@@ -136,21 +136,17 @@ def obtener_patron_vendedora(vendedora_form):
     return None
 
 
-def filtrar_ventas(start_date, end_date, vendedora=None, categoria=None):
+def filtrar_ventas(start_date=None, end_date=None, vendedora=None, categoria=None):
     # Filtrar por fechas si se proporcionan
     if start_date:
-        print(f'Fecha antes de formatearse: {start_date}')
         start_date = pd.to_datetime(datetime.strptime(start_date,'%Y-%m-%d' ), errors='coerce')
         df_filtrado = df_acumulado[df_acumulado['fecha'] >= start_date]
-        print(f'Fecha despues de formatearse: {start_date}')
     else:
         df_filtrado = df_acumulado.copy()
     
     if end_date:
-        print(f'Fecha antes de formatearse: {end_date}')
         end_date = pd.to_datetime(datetime.strptime(end_date, '%Y-%m-%d'), errors='coerce')
         df_filtrado = df_filtrado[df_filtrado['fecha'] <= end_date]
-        print(f'Fecha despues de formatearse: {end_date}')
         
     # Filtrar por vendedora si se proporciona
     if vendedora and vendedora != 'Elegir':
@@ -169,8 +165,3 @@ def filtrar_ventas(start_date, end_date, vendedora=None, categoria=None):
     return total_ventas
 
 print(filtrar_ventas('2024-08-01', '2024-08-31', None, None))
-
-
-# imprimir el codigo asi como esta, y fijate que antes de formatear paso en los parametros las fechas dd-mm-yyyy, formatea y la invierte, y puede filtrar bien
-# lo que me dijo chatgpt es que lo setee a media noche con el start_date = pd.to_datetime(start_date, format='%d-%m-%Y').normalize()
-# Proba eso y te tiene que andas bien, tanto pasando las fechas desde el form como manualmente
