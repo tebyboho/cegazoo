@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import plotly.express as px
 import re
+from datetime import datetime
 
 dir_name = 'CAJAS_FORMATEADAS'
 ruta_raiz = os.path.join(os.getcwd(), dir_name)
@@ -101,9 +102,6 @@ def total_pagos():
     plt.gca().yaxis.set_major_formatter(ticker.StrMethodFormatter('{x:,}'))
     plt.show()
 
-print(df.head())
-
-
 fecha_inicio = pd.to_datetime('01-08-2024', format='%d-%m-%Y', errors='coerce')
 fecha_fin = pd.to_datetime('31-08-2024', format='%d-%m-%Y', errors='coerce')
     
@@ -142,17 +140,18 @@ def filtrar_ventas(start_date, end_date, vendedora=None, categoria=None):
     # Filtrar por fechas si se proporcionan
     if start_date:
         print(f'Fecha antes de formatearse: {start_date}')
-        start_date = pd.to_datetime(start_date, format='%d-%m-%Y', errors='coerce')
+        start_date = pd.to_datetime(datetime.strptime(start_date,'%Y-%m-%d' ), errors='coerce')
         df_filtrado = df_acumulado[df_acumulado['fecha'] >= start_date]
         print(f'Fecha despues de formatearse: {start_date}')
     else:
         df_filtrado = df_acumulado.copy()
     
     if end_date:
-        print(end_date)
-        end_date = pd.to_datetime(end_date, format='%d-%m-%Y', errors='coerce')
+        print(f'Fecha antes de formatearse: {end_date}')
+        end_date = pd.to_datetime(datetime.strptime(end_date, '%Y-%m-%d'), errors='coerce')
         df_filtrado = df_filtrado[df_filtrado['fecha'] <= end_date]
-        print(end_date)
+        print(f'Fecha despues de formatearse: {end_date}')
+        
     # Filtrar por vendedora si se proporciona
     if vendedora and vendedora != 'Elegir':
         filtro_vendedor = df_filtrado['vendedor'].str.contains(obtener_patron_vendedora(vendedora), regex=True)
@@ -169,7 +168,7 @@ def filtrar_ventas(start_date, end_date, vendedora=None, categoria=None):
 
     return total_ventas
 
-print(filtrar_ventas('01-08-2024', '31-08-2024', None, None))
+print(filtrar_ventas('2024-08-01', '2024-08-31', None, None))
 
 
 # imprimir el codigo asi como esta, y fijate que antes de formatear paso en los parametros las fechas dd-mm-yyyy, formatea y la invierte, y puede filtrar bien
