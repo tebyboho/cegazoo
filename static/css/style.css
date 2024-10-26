@@ -22,3 +22,32 @@ h4{
 a{
     text-decoration: none;
 }
+
+
+/* header */
+
+.header div{
+    font-size: 2.2rem;
+    font-family: 'Roboto Mono', monospace;
+    background-color: #FFD5FF;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.container-form{
+    margin-top: 7rem;
+}
+
+.columna{
+    background-color: aquamarine;
+    height: 50px;
+    width: 80px;
+}
+
+.container-form label{
+    font-size: 2rem;
+}
+
+.container-form .entrada{
+    font-size: 1.6rem;
+}

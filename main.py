@@ -7,9 +7,14 @@ import plotly.express as px
 import re
 from datetime import datetime
 
+# Globales
 dir_name = 'CAJAS_FORMATEADAS'
 ruta_raiz = os.path.join(os.getcwd(), dir_name)
 
+patrones_vendedoras = {
+    'Sofia': r'(?i)\bsofi+i*[a]*\b',
+    'Magui': r'(?i)\bmagui+i*[s]*\b'
+    }
 
 # Definir la ruta de almacenamiento del DataFrame
 pickle_file = 'data_acumulada.pkl'
@@ -102,32 +107,6 @@ def total_pagos():
     plt.gca().yaxis.set_major_formatter(ticker.StrMethodFormatter('{x:,}'))
     plt.show()
 
-fecha_inicio = pd.to_datetime('01-08-2024', format='%d-%m-%Y', errors='coerce')
-fecha_fin = pd.to_datetime('31-08-2024', format='%d-%m-%Y', errors='coerce')
-    
-mask = (df_acumulado['fecha'] >= fecha_inicio) & (df_acumulado['fecha'] <= fecha_fin) 
-    
-df_filtrado = df_acumulado[mask]
-    
-    
-lista_vendedores = list(df_filtrado['vendedor'])
-
-
-patrones_vendedoras = {
-    'Sofia': r'(?i)\bsofi+i*[a]*\b',
-    'Magui': r'(?i)\bmagui+i*[s]*\b'
-    }
-
-# Diccionario para almacenar el total de ventas por vendedora
-ventas_por_vendedora = {vendedora: 0 for vendedora in patrones_vendedoras}
-
-
-# # Calcular las ventas para cada vendedora
-# for vendedora, patron in patrones_vendedoras.items():
-#     filtro = df_filtrado['vendedor'].str.contains(patron, regex=True)
-#     total_ventas = df_filtrado[filtro]['total_venta'].sum()
-#     ventas_por_vendedora[vendedora] = total_ventas
-#     print(ventas_por_vendedora)
 
 def obtener_patron_vendedora(vendedora_form):
     for key, patron in patrones_vendedoras.items():
@@ -164,4 +143,4 @@ def filtrar_ventas(start_date=None, end_date=None, vendedora=None, categoria=Non
 
     return total_ventas
 
-print(filtrar_ventas('2024-08-01', '2024-08-31', None, None))
+# print(filtrar_ventas('02-01-2024', '31-01-2024'))

@@ -3,70 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preload" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <!-- normalize -->
+    <link rel="preload" href="{{ url_for('static', filename='css/normalize.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
+    <!-- BOOTSTRAP & CSS -->
     <link rel="preload" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="preload" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <title>Aplicacion Cega-Zoo</title>
 </head>
-<body>
-    <div class="container">
-        
-        <form class="mt-5" method="POST" action="">
-            
-            <div class="row m-3">
-                <label class="col-1 col-form form-label" for="start_date">Fecha de inicio:</label>
-                <div class="col-5">
-                    <input class="form-control" type="date" id="start_date" name="start_date" value="{{ formulario.start_date }}" >
-                </div>
-            </div>
-            
-            <div class="row m-3">
-                <label class="col-1 col-form form-label" for="end_date" >Fecha de fin:</label>
-                <div class="col-5">
-                    <input class="form-control" type="date" id="end_date" name="end_date" value="{{ formulario.end_date }}" >
-                </div>
-            </div>
-            <div class="row m-3  mb-3">
-                <label class="col-1 col-form form-label" for="vendedora">Vendedora</label>
-                <div class="col-5">
-                    <select class="form-select" id="vendedora" name="vendedora">
-                        <option value="" {% if not formulario.vendedora%}selected{% endif %}>Elegir</option>
-                        <option value="Magui" {% if formulario.vendedora == 'Magui'%} selected {% endif %}>Magui</option>
-                        <option value="Sofia" {% if formulario.vendedora == 'Sofia'%} selected {% endif %}>Sofi</option>
-                      </select>
-                </div>
-            </div>
+<body>        
+    
+    
+    <header class="header">
+        <div class="container d-flex flex-column align-items-center">
+            <h2>Aplicación de Gabriela Tello</h2>
+        </div>
+    </header>
 
-            <div class="row m-3  mb-3">
-                <label class="col-1 col-form form-label" for="categoria">Categoria</label>
-                <div class="col-5">
-                    <select class="form-select" id="categoria" name="categoria">
-                        <option value ="" {{'selected' if not formulario.categoria}}selected>Elegir</option>
-                        <option value="accesorios" {{ 'selected' if formulario.categoria == 'accesorios' else ''}}>Accesorios</option>
-                        <option value="balanceados" {{ 'selected' if formulario.categoria == 'balanceados' else ''}}>Balanceados</option>
-                        <option value="medicamentos" {{ 'selected' if formulario.categoria == 'medicamentos' else ''}}>Medicamentos</option>
-                        <option value="animales" {{ 'selected' if formulario.categoria == 'animales' else ''}}>Animales</option>
-                        <option value="acuario" {{ 'selected' if formulario.categoria == 'acuario' else ''}}>Acuario</option>
-                      </select>
-                </div>
-            </div>
-
-            <div class="row m-3 mt-5">
-                <div class="col-1">
-                    <button type="submit">Aplicar filtro</button>
-                </div>
-                {% if context %}
-                    <div class="col-1">
-                        <h3 class=""> Resultado: {{context}} </h3>
+    <div class="container container-form">
+        <div class="row">
+            <div class="col-6">
+                <form class="form" method="POST" action="">
+            
+                    <div class="row m-3">
+                        <label class="col-3 col-form form-label" for="start_date">Fecha de inicio:</label>
+                        <div class="col">
+                            <input class="form-control entrada" type="date" id="start_date" name="start_date" value="{{ formulario.start_date }}" >
+                        </div>
                     </div>
-                {% endif %}
+                    
+                    <div class="row m-3">
+                        <label class="col-3 col-form form-label" for="end_date" >Fecha de fin:</label>
+                        <div class="col ">
+                            <input class="form-control entrada" type="date" id="end_date" name="end_date" value="{{ formulario.end_date }}" >
+                        </div>
+                    </div>
+                    <div class="row m-3  mb-3">
+                        <label class="col-3 col-form form-label" for="vendedora">Vendedora</label>
+                        <div class="col">
+                            <select class="form-select entrada" id="vendedora" name="vendedora">
+                                <option value="" {% if not formulario.vendedora%}selected{% endif %}>Elegir</option>
+                                <option value="Magui" {% if formulario.vendedora == 'Magui'%} selected {% endif %}>Magui</option>
+                                <option value="Sofia" {% if formulario.vendedora == 'Sofia'%} selected {% endif %}>Sofi</option>
+                              </select>
+                        </div>
+                    </div>
+        
+                    <div class="row m-3  mb-3">
+                        <label class="col-3 col-form form-label" for="categoria">Categoria</label>
+                        <div class="col">
+                            <select class="form-select entrada" id="categoria" name="categoria">
+                                <option value ="" {{'selected' if not formulario.categoria}}selected>Elegir</option>
+                                <option value="accesorios" {{ 'selected' if formulario.categoria == 'accesorios' else ''}}>Accesorios</option>
+                                <option value="balanceados" {{ 'selected' if formulario.categoria == 'balanceados' else ''}}>Balanceados</option>
+                                <option value="medicamentos" {{ 'selected' if formulario.categoria == 'medicamentos' else ''}}>Medicamentos</option>
+                                <option value="animales" {{ 'selected' if formulario.categoria == 'animales' else ''}}>Animales</option>
+                                <option value="acuario" {{ 'selected' if formulario.categoria == 'acuario' else ''}}>Acuario</option>
+                              </select>
+                        </div>
+                    </div>
+        
+                    <div class="row mt-3">
+                        <div class="col-3">
+                            <button class="btn btn-primary btn-lg" type="submit">Aplicar Filtros</button>
+                        </div>
+                        {% if context %}
+                        <div class="col">
+                            <h4 class="">Resultado: $ {{context}}</h4>
+                        </div>
+                        {% endif %} 
+                        </div>
+                    </div>
+                </form>
             </div>
-
-        </form>
-
+        </div>
     </div>
 </body>
 </html>
