@@ -5,3 +5,7 @@ prueba.py
 test.py
 display.py
 .DS_Store
+client_secrets.json
+credentials_module.json
+gauth.py
+settings.yaml
