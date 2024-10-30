@@ -1,28 +1,20 @@
-from google.oauth2 import service_account
-from googleapiclient.discovery import build
+from pydrive2.auth import GoogleAuth
+from pydrive2.drive import GoogleDrive
+from pydrive2.files import GoogleDriveFileList
 
-directorio_credenciales = 'credentials_module.json'
 
-#Iniciar sesion
+gauth = GoogleAuth()
+gauth.LocalWebserverAuth()
 
-# Autenticación con credenciales de servicio
-creds = service_account.Credentials.from_service_account_file('credentials_module.json', scopes=["https://www.googleapis.com/auth/drive"])
+drive = GoogleDriveFileList(gauth)
+driv = GoogleDrive(gauth)
+file1 = driv.CreateFile({'title':'Text.txt'})
 
-# Construir el servicio de la API de Google Drive
-service = build('drive', 'v3', credentials=creds)
+file1.SetContentString('Hello world')
 
-# Identifica la carpeta de Google Drive usando su ID
-folder_id = '1wXVDj3zk0V9cWc9MzKUWv5RvTK5ysB7y'
+file1.Upload()
 
-def listar_archivos_en_carpeta(folder_id):
-    # Llamada a la API para listar archivos en la carpeta especificada
-    resultados = service.files().list(q=f"'{folder_id}' in parents", fields="files(id, name)").execute()
-    archivos = resultados.get('files', [])
 
-    if not archivos:
-        print("No se encontraron archivos.")
-    else:
-        for archivo in archivos:
-            print(f"Nombre: {archivo['name']}, ID: {archivo['id']}")
-
-listar_archivos_en_carpeta(folder_id)
+file_list = driv.ListFile({'q': "'root' in parents and trashed=false"}).GetList()
+for file in file_list:
+    print(f"{file['title']} ({file['id']})")

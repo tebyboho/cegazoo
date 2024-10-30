@@ -1,5 +1,6 @@
 /CAJAS_FORMATEADAS
 /__pycache__
+/cegazoo_env
 data_acumulada.pkl
 prueba.py
 test.py

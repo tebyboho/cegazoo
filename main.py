@@ -3,7 +3,7 @@ from matplotlib import ticker
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-import plotly.express as px
+# import plotly.express as px
 import re
 from datetime import datetime
 
