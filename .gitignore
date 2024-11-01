@@ -2,6 +2,7 @@
 /__pycache__
 /cegazoo_env
 data_acumulada.pkl
+datos_del_drive.pkl
 prueba.py
 test.py
 display.py

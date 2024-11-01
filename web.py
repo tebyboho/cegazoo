@@ -22,7 +22,7 @@ def index():
         # total_ventas = filtrar_ventas(start_date, end_date, vendedora, categoria)
         
         return render_template(template_name_or_list='index.html', formulario=formulario ,context=total_ventas)
-    return render_template(template_name_or_list='index.html')
+    return render_template(template_name_or_list='index.html', formulario=None, context=None)
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=8000)
