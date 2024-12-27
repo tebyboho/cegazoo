@@ -11,3 +11,5 @@ client_secrets.json
 credentials_module.json
 gauth.py
 settings.yaml
+recursos.txt
+__pycache__/main.cpython-312.pyc

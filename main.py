@@ -17,14 +17,15 @@ patrones_vendedoras = {
     }
 
 # Definir la ruta de almacenamiento del DataFrame
-pickle_file = 'data_acumulada.pkl'
+# pickle_file = 'data_acumulada.pkl'
+pickle_file = 'datos_del_drive.pkl'
+
 
 # Verificar si el archivo ya existe
 if os.path.exists(pickle_file):
     # Si existe, cargar los datos del archivo
     df_acumulado = pd.read_pickle(pickle_file)
-    print("Datos cargados desde el archivo pickle.")
-    df = df_acumulado.copy()
+    print("Datos cargados desde el archivo pickle (drive).")
 else:
     # Si no existe, crear un nuevo DataFrame y procesa los archivos
     df_acumulado = pd.DataFrame()
@@ -60,41 +61,7 @@ else:
     df_acumulado.to_pickle(pickle_file)
     print("Datos procesados y guardados en el archivo pickle.")
   
-def total_ventas_historico():
-    df = df_acumulado.groupby(pd.Grouper(key='fecha', freq='ME'))['total_venta'].sum().reset_index()
-    plt.figure(figsize=(10, 6))
-    plt.plot(df['fecha'], df['total_venta'], marker='o')
-    plt.title('Total de Ventas a lo Largo del Tiempo')
-    plt.xlabel('Fecha')
-    plt.ylabel('Total de Ventas')
-    plt.grid(True)
-    plt.gca().xaxis.set_major_locator(mdates.MonthLocator())  # Mostrar un tick por mes
-    plt.gcf().autofmt_xdate()
-    plt.gca().yaxis.set_major_formatter(ticker.StrMethodFormatter('{x:,}'))
-    plt.show()
-    
-    '''fig = px.line(df, x="fecha", y="total_venta",
-                 hover_data=["total_venta"],
-                 labels={"total_venta": "Total de Ventas"})
-    grafico interactivo..
-    fig.show()'''
 
-
-def ventas_comparacion():
-    ventas_por_mes = df_acumulado.groupby(df_acumulado['fecha'].dt.to_period('M')).sum(numeric_only=True)
-    categorias = ['total_accesorios', 'total_balanceados', 'total_medicamentos', 'total_animales', 'total_acuario']
-    
-    ventas_por_mes[categorias].plot(kind='bar', figsize=(10, 6), width=0.7)
-    plt.title('Ventas por Categoría y Mes')
-    plt.ylabel('Total Ventas')
-    plt.xlabel('Mes')
-    plt.xticks(rotation=45)
-    plt.legend(title="Categorías")
-    plt.tight_layout()
-    plt.show()
-
-
-def total_pagos():
     df = df_acumulado.groupby(pd.Grouper(key='fecha', freq='ME'))['pagos'].sum().reset_index()
     plt.figure(figsize=(10, 6))
     plt.plot(df['fecha'], df['pagos'], marker='o')
@@ -113,7 +80,6 @@ def obtener_patron_vendedora(vendedora_form):
         if re.search(patron, vendedora_form):
             return patron
     return None
-
 
 def filtrar_ventas(start_date=None, end_date=None, vendedora=None, categoria=None):
     # Filtrar por fechas si se proporcionan
@@ -143,4 +109,6 @@ def filtrar_ventas(start_date=None, end_date=None, vendedora=None, categoria=Non
 
     return total_ventas
 
-# print(filtrar_ventas('02-01-2024', '31-01-2024'))
+print(filtrar_ventas('2024-08-02', '2024-08-31'))
+
+
