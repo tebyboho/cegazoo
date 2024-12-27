@@ -100,15 +100,6 @@ def procesar_archivos(archivos, ruta_json):
             
     return datos_lista
 
-# Creo el Dataframe para todas las cajas
-#df_acumulado = pd.DataFrame(procesar_archivos(archivos_xlsx))
-#df_acumulado['fecha'] = df_acumulado['file'].str[:-7].replace(" ", '')
-#df_acumulado['fecha'] = pd.to_datetime(df_acumulado['fecha'], errors='coerce', dayfirst=True)
-    
-
-# Guardar el DataFrame en un archivo para futuras ejecuciones
-#df_acumulado.to_pickle(pickle_file_drive)
-print("Datos procesados y guardados en el archivo pickle.")
 
 archivos_encontrados = listar_archivos(folder_id)
 # Creo el Dataframe para todas las cajas
